@@ -31,7 +31,7 @@ jobs:
         run: git submodule update --init --recursive
 
       - name: Move to submodule head
-        run: cd notes && git pull && cd ..
+        run: cd notes && git pull origin main && cd ..
 
       - name: Build Quartz
         run: npx quartz build
