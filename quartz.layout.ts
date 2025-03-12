@@ -33,7 +33,14 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      folderDefaultState: "collapsed",
+      filterFn: (node) => {
+        if (node.isFolder && node.displayName == "assets") {
+          return false
+        } else return true
+      },
+    }),
   ],
   right: [
     Component.Graph(),
