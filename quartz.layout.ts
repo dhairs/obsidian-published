@@ -35,11 +35,7 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.Explorer({
       folderDefaultState: "collapsed",
-      filterFn: (node) => {
-        if (node.isFolder && node.displayName == "assets") {
-          return false
-        } else return true
-      },
+      useSavedState: false,
     }),
   ],
   right: [
@@ -57,7 +53,7 @@ export const defaultListPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
     Component.Darkmode(),
-    Component.Explorer(),
+    Component.Explorer({ folderDefaultState: "collapsed", useSavedState: false }),
   ],
   right: [],
 }
