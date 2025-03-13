@@ -6,10 +6,12 @@ import chalk from "chalk"
 
 export interface Options {
   priority: ("frontmatter" | "git" | "filesystem")[]
+  notes_dir: string
 }
 
 const defaultOptions: Options = {
   priority: ["frontmatter", "git", "filesystem"],
+  notes_dir: "notes",
 }
 
 function coerceDate(fp: string, d: any): Date {
@@ -42,7 +44,6 @@ export const CreatedModifiedDate: QuartzTransformerPlugin<Partial<Options>> = (u
 
             const fp = file.data.filePath!
             const fullFp = path.isAbsolute(fp) ? fp : path.posix.join(file.cwd, fp)
-            const notesdir = "notes"
             for (const source of opts.priority) {
               if (source === "filesystem") {
                 const st = await fs.promises.stat(fullFp)
@@ -57,12 +58,12 @@ export const CreatedModifiedDate: QuartzTransformerPlugin<Partial<Options>> = (u
                   // Get a reference to the main git repo.
                   // It's either the same as the workdir,
                   // or 1+ level higher in case of a submodule/subtree setup
-                  repo = Repository.discover(path.join(file.cwd, notesdir))
+                  repo = Repository.discover(path.join(file.cwd, opts.notes_dir))
                 }
 
                 try {
                   modified ||= await repo.getFileLatestModifiedDateAsync(
-                    file.data.filePath!.substring(notesdir.length + 1),
+                    file.data.filePath!.substring(opts.notes_dir.length + 1),
                   )
                 } catch {
                   console.log(
