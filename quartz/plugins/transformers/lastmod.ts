@@ -42,6 +42,7 @@ export const CreatedModifiedDate: QuartzTransformerPlugin<Partial<Options>> = (u
 
             const fp = file.data.filePath!
             const fullFp = path.isAbsolute(fp) ? fp : path.posix.join(file.cwd, fp)
+            const notesdir = "notes"
             for (const source of opts.priority) {
               if (source === "filesystem") {
                 const st = await fs.promises.stat(fullFp)
@@ -56,11 +57,13 @@ export const CreatedModifiedDate: QuartzTransformerPlugin<Partial<Options>> = (u
                   // Get a reference to the main git repo.
                   // It's either the same as the workdir,
                   // or 1+ level higher in case of a submodule/subtree setup
-                  repo = Repository.discover(file.cwd)
+                  repo = Repository.discover(path.join(file.cwd, notesdir))
                 }
 
                 try {
-                  modified ||= await repo.getFileLatestModifiedDateAsync(file.data.filePath!)
+                  modified ||= await repo.getFileLatestModifiedDateAsync(
+                    file.data.filePath!.substring(notesdir.length + 1),
+                  )
                 } catch {
                   console.log(
                     chalk.yellow(
