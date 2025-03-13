@@ -79,7 +79,7 @@ function createFileNode(currentSlug: FullSlug, node: FileTrieNode): HTMLLIElemen
   const a = li.querySelector("a") as HTMLAnchorElement
   a.href = resolveRelative(currentSlug, node.slug)
   a.dataset.for = node.slug
-  a.textContent = node.displayName
+  a.textContent = node.displayName.replaceAll("-", " ")
 
   if (currentSlug === node.slug) {
     a.classList.add("active")
@@ -111,11 +111,11 @@ function createFolderNode(
     a.href = resolveRelative(currentSlug, folderPath)
     a.dataset.for = folderPath
     a.className = "folder-title"
-    a.textContent = node.displayName
+    a.textContent = node.displayName.replaceAll("-", " ")
     button.replaceWith(a)
   } else {
     const span = titleContainer.querySelector(".folder-title") as HTMLElement
-    span.textContent = node.displayName
+    span.textContent = node.displayName.replaceAll("-", " ")
   }
 
   // if the saved state is collapsed or the default state is collapsed
