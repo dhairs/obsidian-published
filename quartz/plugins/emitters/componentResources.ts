@@ -85,7 +85,8 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
     const tagId = cfg.analytics.tagId
     componentResources.afterDOMLoaded.push(`
       const gtagScript = document.createElement("script")
-      gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=${tagId}"
+      // gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=${tagId}"
+      gtagScript.src = "/static/tracking.js"
       gtagScript.async = true
       document.head.appendChild(gtagScript)
 
