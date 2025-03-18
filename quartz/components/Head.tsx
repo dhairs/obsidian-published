@@ -222,6 +222,8 @@ export default (() => {
             return resource
           }
         })}
+
+        <link rel="manifest" href="/static/manifest.json" />
       </head>
     )
   }
