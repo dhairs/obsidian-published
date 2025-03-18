@@ -9,7 +9,7 @@ const PageTitle: QuartzComponent = ({ fileData, cfg, displayClass }: QuartzCompo
   return (
     <h2 class={classNames(displayClass, "page-title")}>
       <a href={baseDir}>
-        <img src="/static/icon.svg" width={40} class={classNames(displayClass, "page-title-img")} />
+        <img src="/static/icon.svg" width={40} />
         {"  "}
         {title}
       </a>
@@ -23,14 +23,14 @@ PageTitle.css = `
   margin: 0;
 }
 
-.page-title-img {
+.page-title img {
    vertical-align: middle; /* Or try 'top' or 'bottom' */
    filter: invert(0%);
 }
-html[saved-theme="light"] .page-title-img {
+
+html[saved-theme="light"] .page-title img {
   filter: invert(100%);
 }
-
 `
 
 export default (() => PageTitle) satisfies QuartzComponentConstructor
